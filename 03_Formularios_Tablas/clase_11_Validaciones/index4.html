@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario Dinámico</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    form {
+      max-width: 400px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    div {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .message {
+      font-size: 0.9em;
+      display: none;
+      margin-top: 5px;
+    }
+    .error { color: #cc6666; }
+    .success { color: #4CAF50; }
+    .info { color: #3f8fd9; }
+    .warning { color: #d98c3f; }
+  </style>
+</head>
+<body>
+  <form action="#" method="post" novalidate>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="usuario@ejemplo.com">
+      <span class="message error">Por favor ingresa un correo válido.</span>
+      <span class="message success">Correo válido ✔</span>
+      <span class="message info">Usa tu correo personal o laboral.</span>
+    </div>
+    <div>
+      <label for="telefono">Teléfono</label>
+      <input type="tel" id="telefono" name="telefono" pattern="[0-9]{9}" placeholder="123456789" required>
+      <span class="message error">Debe contener exactamente 9 dígitos.</span>
+      <span class="message success">Teléfono válido ✔</span>
+      <span class="message warning">No uses guiones ni espacios.</span>
+    </div>
+    <div>
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" minlength="8" required 
+             pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}" 
+             placeholder="Mínimo 8 caracteres">
+      <span class="message error">Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número.</span>
+      <span class="message success">Contraseña segura ✔</span>
+      <span class="message info">Consejo: mezcla letras, números y símbolos.</span>
+    </div>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    function validarCampo(input, mensajes) {
+      if (input.validity.valid) {
+        mensajes.error.style.display = "none";
+        mensajes.success.style.display = "block";
+      } else {
+        mensajes.error.style.display = "block";
+        mensajes.success.style.display = "none";
+      }
+      // Mostrar siempre info o warning como ayuda
+      if (mensajes.info) mensajes.info.style.display = "block";
+      if (mensajes.warning) mensajes.warning.style.display = "block";
+    }
+
+    document.querySelectorAll("input").forEach(input => {
+      const mensajes = {
+        error: input.parentElement.querySelector(".error"),
+        success: input.parentElement.querySelector(".success"),
+        info: input.parentElement.querySelector(".info"),
+        warning: input.parentElement.querySelector(".warning")
+      };
+      input.addEventListener("input", () => validarCampo(input, mensajes));
+    });
+  </script>
+</body>
+</html>

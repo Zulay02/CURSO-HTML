@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Más inputs</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <form id="formulario">
+        <fieldset>
+            <legend>Intereses</legend>
+            <input type="checkbox" name="intereses" id="deportes" value="deportes">
+            <label for="deportes">Deportes</label>
+
+            <input type="checkbox" name="intereses" id="musica" value="musica">
+            <label for="musica">Música</label>
+
+            <!-- Aquí se mostrará el mensaje de error -->
+            <div id="error-intereses" class="error"></div>
+        </fieldset>
+
+        <div>
+            <label for="pais">País</label>
+            <select name="pais" id="pais" required>
+                <option value="">Seleccione...</option>
+                <option value="Mexico">México</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Venezuela">Venezuela</option>
+                <option value="Peru">Perú</option>
+                <option value="Brasil">Brasil</option>
+                <option value="Chile">Chile</option>
+            </select>
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById("formulario").addEventListener("submit", function(event) {
+            const checkboxes = document.querySelectorAll('input[name="intereses"]');
+            const errorDiv = document.getElementById("error-intereses");
+            let algunoMarcado = false;
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    algunoMarcado = true;
+                }
+            });
+
+            if (!algunoMarcado) {
+                event.preventDefault(); // Evita el envío
+                errorDiv.textContent = "Por favor selecciona al menos un interés.";
+            } else {
+                errorDiv.textContent = ""; // Limpia el mensaje si está correcto
+            }
+        });
+    </script>
+
+</body>
+</html>
